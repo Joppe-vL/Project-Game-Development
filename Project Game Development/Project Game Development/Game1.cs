@@ -8,9 +8,8 @@ namespace Project_Game_Development
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private Texture2D _texture;
-        private Rectangle _deelRectangle;
-        private int SchuifOp_X = 0;
+        private Texture2D _punkTexture;
+        private Punk punk;
 
         public Game1()
         {
@@ -22,8 +21,8 @@ namespace Project_Game_Development
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            _deelRectangle = new Rectangle(SchuifOp_X,0,48,48);
             base.Initialize();
+            punk = new Punk(_punkTexture);
         }
 
         protected override void LoadContent()
@@ -31,7 +30,7 @@ namespace Project_Game_Development
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
-            _texture = Content.Load<Texture2D>("Punk_run");
+            _punkTexture = Content.Load<Texture2D>("Punk_run");
         }
 
         protected override void Update(GameTime gameTime)
@@ -40,7 +39,7 @@ namespace Project_Game_Development
                 Exit();
 
             // TODO: Add your update logic here
-
+            punk.Update();
             base.Update(gameTime);
         }
 
@@ -48,15 +47,10 @@ namespace Project_Game_Development
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             _spriteBatch.Begin();
-            _spriteBatch.Draw(_texture, new Vector2(0, 0), _deelRectangle, Color.White);
+            punk.Draw(_spriteBatch);
             _spriteBatch.End();
 
-            SchuifOp_X += 48;
-            if (SchuifOp_X > 240)
-            {
-                SchuifOp_X = 0;
-            }
-            _deelRectangle.X = SchuifOp_X;
+            
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
